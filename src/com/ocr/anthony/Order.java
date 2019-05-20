@@ -3,6 +3,7 @@ package com.ocr.anthony;
 import java.util.Scanner;
 
 public class Order {
+    Scanner sc = new Scanner(System.in);
     /**
      * Display all available menus in the restaurant.
      */
@@ -45,7 +46,6 @@ public class Order {
     public void runMenu() {
 
         this.displayAvailableMenu();
-        Scanner sc = new Scanner(System.in);
         int nbMenu = sc.nextInt();
         this.displaySelectedMenu(nbMenu);
         switch (nbMenu) {
@@ -176,4 +176,16 @@ public class Order {
         System.out.println("Que souhaitez-vous comme boisson ?");
     }
 
+    /**
+     * Run asking process for several menus.
+     */
+    public void runMenus() {
+        System.out.println("Combien souhaitez vous commander de menu ?");
+        int menuQuantity = sc.nextInt();
+        int counter = 0;
+        while (counter < menuQuantity) {
+            runMenu();
+            counter = counter + 1;
+        }
+    }
 }
