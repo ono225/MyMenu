@@ -241,5 +241,31 @@ public class OrderTest {
         assertEquals("Vous avez choisi comme boisson : eau gazeuse", output[29]);
     }
 
+    @Test
+    public void Given_Chiken_When_AskAboutMenus_Then_DisplayChikenChoice() {
+        System.setIn(new ByteArrayInputStream("1\n".getBytes()));
+        order = new Order();
+        order.askMenu();
+        String[] output = outContent.toString().replace("\r\n", "\n").split("\n");
+        assertEquals("Vous avez choisi comme menu : poulet", output[5]);
+    }
+
+    @Test
+    public void Given_FriesWithAllSidesEnabled_When_AskAboutSides_Then_DisplayFriesChoice() {
+        System.setIn(new ByteArrayInputStream("2\n".getBytes()));
+        order = new Order();
+        order.askSide(true);
+        String[] output = outContent.toString().replace("\r\n", "\n").split("\n");
+        assertEquals("Vous avez choisi comme accompagnement : frites", output[5]);
+    }
+
+    @Test
+    public void Given_Water_When_AskAboutDrinks_Then_DisplayWaterChoice() {
+        System.setIn(new ByteArrayInputStream("1\n".getBytes()));
+        order = new Order();
+        order.askDrink();
+        String[] output = outContent.toString().replace("\r\n", "\n").split("\n");
+        assertEquals("Vous avez choisi comme boisson : eau plate", output[5]);
+    }
 
 }
