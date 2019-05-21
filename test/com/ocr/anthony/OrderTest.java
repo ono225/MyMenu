@@ -105,6 +105,7 @@ public class OrderTest {
         assertEquals("Vous avez choisi comme accompagnement : frites", output[11]);
         assertEquals("Vous avez choisi comme boisson : soda", output[17]);
     }
+
     @Test
     public void Given_BeefWithVegetableInStandardInput_When_MenuIsRun_Then_DisplayCorrectProcess() {
         System.setIn(new ByteArrayInputStream("2\n1\n".getBytes()));
@@ -114,6 +115,7 @@ public class OrderTest {
         assertEquals("Vous avez choisi comme menu : boeuf", output[5]);
         assertEquals("Vous avez choisi comme accompagnement : légumes frais", output[11]);
     }
+
     @Test
     public void Given_VegetarianWithNoRiceAndSparklingWaterInStandardInput_When_MenuIsRun_Then_DisplayCorrectProcess() {
         System.setIn(new ByteArrayInputStream("3\n2\n2\n".getBytes()));
@@ -126,13 +128,10 @@ public class OrderTest {
     }
 
     @Test
-
     public void Given_VegetablesAndAllSides_When_DisplaySideSelected_Then_DisplayVegetablesSentence() {
 
         order.displaySelectedSide(1, true);
-
         String output = outContent.toString().replace("\r\n", "\n");
-
         assertEquals("Vous avez choisi comme accompagnement : légumes frais\n", output);
 
     }
@@ -150,61 +149,46 @@ public class OrderTest {
     }
 
     @Test
-
     public void Given_RiceAndAllSides_When_DisplaySideSelected_Then_DisplayRiceSentence() {
 
         order.displaySelectedSide(3, true);
-
         String output = outContent.toString().replace("\r\n", "\n");
-
         assertEquals("Vous avez choisi comme accompagnement : riz\n", output);
 
     }
 
     @Test
-
     public void Given_BadValueAndAllSides_When_DisplaySideSelected_Then_DisplayErrorSentence() {
 
         order.displaySelectedSide(5, true);
-
         String output = outContent.toString().replace("\r\n", "\n");
-
         assertEquals("Vous n'avez pas choisi d'accompagnement parmi les choix proposés\n", output);
 
     }
 
     @Test
-
     public void Given_RiceAndNotAllSides_When_DisplaySideSelected_Then_DisplayRiceSentence() {
 
         order.displaySelectedSide(1, false);
-
         String output = outContent.toString().replace("\r\n", "\n");
-
         assertEquals("Vous avez choisi comme accompagnement : riz\n", output);
 
     }
 
     @Test
-
     public void Given_NoRiceAndNotAllSides_When_DisplaySideSelected_Then_DisplayNoRiceSentence() {
 
         order.displaySelectedSide(2, false);
-
         String output = outContent.toString().replace("\r\n", "\n");
-
         assertEquals("Vous avez choisi comme accompagnement : pas de riz\n", output);
 
     }
 
     @Test
-
     public void Given_BadValueAndNotAllSides_When_DisplaySideSelected_Then_DisplayErrorSentence() {
 
         order.displaySelectedSide(5, false);
-
         String output = outContent.toString().replace("\r\n", "\n");
-
         assertEquals("Vous n'avez pas choisi d'accompagnement parmi les choix proposés\n", output);
 
     }
@@ -214,16 +198,19 @@ public class OrderTest {
         order.displaySelectedDrink(1);
         assertEquals("Vous avez choisi comme boisson : eau plate\n", outContent.toString().replace("\r\n", "\n"));
     }
+
     @Test
     public void Given_SparklingWater_When_DisplayDrinkSelected_Then_DisplaySparklingWaterSentence() {
         order.displaySelectedDrink(2);
         assertEquals("Vous avez choisi comme boisson : eau gazeuse\n", outContent.toString().replace("\r\n", "\n"));
     }
+
     @Test
     public void Given_Soda_When_DisplayDrinkSelected_Then_DisplaySodaSentence() {
         order.displaySelectedDrink(3);
         assertEquals("Vous avez choisi comme boisson : soda\n", outContent.toString().replace("\r\n", "\n"));
     }
+
     @Test
     public void Given_BadValue_When_DisplayDrinkSelected_Then_DisplayErrorSentence() {
         order.displaySelectedDrink(5);
@@ -240,6 +227,7 @@ public class OrderTest {
         assertEquals("Vous avez choisi comme accompagnement : frites", output[12]);
         assertEquals("Vous avez choisi comme boisson : soda", output[18]);
     }
+
     @Test
     public void Given_TwoMenu_BeefWithVegetable_VegetarianWithNoRiceAndSparklingWaterInStandardInput_When_MenusIsRun_Then_DisplayCorrectProcess() {
         System.setIn(new ByteArrayInputStream("2\n2\n1\n3\n2\n2\n".getBytes()));

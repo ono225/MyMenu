@@ -46,31 +46,59 @@ public class Order {
     public void runMenu() {
 
         this.displayAvailableMenu();
-        int nbMenu = sc.nextInt();
-        this.displaySelectedMenu(nbMenu);
-        switch (nbMenu) {
-            case 1:
-                displayAvailableSide(true);
-                int nbSide = sc.nextInt();
-                displaySelectedSide(nbSide, true);
-                displayAvailableDrink();
-                int nbDrink = sc.nextInt();
-                displaySelectedDrink(nbDrink);
+        int nbMenu;
+
+        do {
+            nbMenu = sc.nextInt();
+            this.displaySelectedMenu(nbMenu);
+
+            switch (nbMenu) {
+
+                case 1:
+                    displayAvailableSide(true);
+                    int nbSide;
+
+                    do {
+                        nbSide = sc.nextInt();
+                        displaySelectedSide(nbSide, true);
+                    } while (nbSide < 1 || nbSide > 3);
+
+                    displayAvailableDrink();
+                    int nbDrink;
+
+                    do {
+                        nbDrink = sc.nextInt();
+                        displaySelectedDrink(nbDrink);
+                    } while (nbDrink < 1 || nbDrink > 3);
                 break;
-            case 2:
-                displayAvailableSide(true);
-                nbSide = sc.nextInt();
-                displaySelectedSide(nbSide, true);
+
+                case 2:
+                    displayAvailableSide(true);
+
+                    do {
+                        nbSide = sc.nextInt();
+                        displaySelectedSide(nbSide, true);
+                    } while (nbSide < 1 || nbSide > 3);
                 break;
-            case 3:
-                displayAvailableSide(false);
-                nbSide = sc.nextInt();
-                displaySelectedSide(nbSide, false);
-                displayAvailableDrink();
-                nbDrink = sc.nextInt();
-                displaySelectedDrink(nbDrink);
+
+                case 3:
+                    displayAvailableSide(false);
+
+                    do {
+                        nbSide = sc.nextInt();
+                        displaySelectedSide(nbSide, false);
+                    } while (nbSide < 1 || nbSide > 2);
+
+                    displayAvailableDrink();
+
+                    do {
+                        nbDrink = sc.nextInt();
+                        displaySelectedDrink(nbDrink);
+                    } while (nbDrink < 1 || nbDrink > 3);
                 break;
-        }
+            }
+
+        } while (nbMenu < 1 || nbMenu > 3);
 
     }
 
@@ -92,32 +120,36 @@ public class Order {
     public void displaySelectedSide(int nbSide, boolean allSidesEnable) {
         if (allSidesEnable){
             switch (nbSide){
+
                 case 1 :
                     System.out.println("Vous avez choisi comme accompagnement : légumes frais");
-                    break;
+                break;
+
                 case 2 :
                     System.out.println("Vous avez choisi comme accompagnement : frites");
-                    break;
+                break;
+
                 case 3 :
                     System.out.println("Vous avez choisi comme accompagnement : riz");
-                    break;
+                break;
+
                 default:
                     System.out.println("Vous n'avez pas choisi d'accompagnement parmi les choix proposés");
-                    break;
+                break;
             }
         } else {
             switch (nbSide){
                 case 1 :
                     System.out.println("Vous avez choisi comme accompagnement : riz");
-                    break;
+                break;
 
                 case 2 :
                     System.out.println("Vous avez choisi comme accompagnement : pas de riz");
-                    break;
+                break;
 
                 default:
                     System.out.println("Vous n'avez pas choisi d'accompagnement parmi les choix proposés");
-                    break;
+                break;
             }
         }
     }
@@ -130,19 +162,19 @@ public class Order {
         switch (nbSide) {
             case 1 :
                 System.out.println("Vous avez choisi comme boisson : eau plate");
-                break;
+            break;
 
             case 2 :
                 System.out.println("Vous avez choisi comme boisson : eau gazeuse");
-                break;
+            break;
 
             case 3 :
                 System.out.println("Vous avez choisi comme boisson : soda");
-                break;
+            break;
 
             default:
                 System.out.println("Vous n'avez pas choisi de boisson parmi les choix proposés");
-                break;
+            break;
         }
     }
 
@@ -154,6 +186,7 @@ public class Order {
      */
     public void displayAvailableSide(boolean allSideEnable) {
         System.out.println("Choix accompagnement");
+
         if (allSideEnable) {
             System.out.println("1 - légumes frais");
             System.out.println("2 - frites");
@@ -183,6 +216,7 @@ public class Order {
         System.out.println("Combien souhaitez vous commander de menu ?");
         int menuQuantity = sc.nextInt();
         int counter = 0;
+
         while (counter < menuQuantity) {
             runMenu();
             counter = counter + 1;
