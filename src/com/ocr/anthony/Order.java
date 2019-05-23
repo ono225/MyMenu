@@ -1,6 +1,17 @@
 package com.ocr.anthony;
 
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.InputMismatchException;
 import java.util.Scanner;
+
+
+import static java.nio.file.StandardOpenOption.APPEND;
+
+
 
 public class Order {
     Scanner sc = new Scanner(System.in);
@@ -44,12 +55,14 @@ public class Order {
      * Run asking process for a menu.
      */
 
-    public void runMenu() {
+    public String runMenu() {
 
 /*
         this.displayAvailableMenu();
 */
         int nbMenu = askMenu();
+        int nbSide = -1;
+        int nbDrink = -1;
 
       /*  do {
             nbMenu = sc.nextInt();
@@ -76,6 +89,7 @@ public class Order {
         } while (nbMenu < 1 || nbMenu > 3);
 */
 
+        return nbMenu + "," + nbSide + "," + nbDrink + "%n";
     }
 
     /**
@@ -189,13 +203,34 @@ public class Order {
      * Run asking process for several menus.
      */
     public void runMenus() {
-        System.out.println("Combien souhaitez vous commander de menu ?");
-        int menuQuantity = sc.nextInt();
 
+        Path orderPath = Paths.get("order.csv");
+        System.out.println("Combien souhaitez vous commander de menu ?");
+        int menuQuantity = -1;
+        boolean responseIsGood;
+
+        do {
+            try {
+                menuQuantity = sc.nextInt();
+                responseIsGood = true;
+            } catch (InputMismatchException e) {
+                sc.next();
+                System.out.println("Vous devez saisir un nombre, correspondant au nombre de menus souhaités");
+                responseIsGood = false;
+            }
+        } while (!responseIsGood);
         orderSummary = "Résumé de votre commande :%n";
         for (int i = 0; i < menuQuantity; i++) {
             orderSummary += "Menu " + (i + 1) + ":%n";
-            this.runMenu();
+
+            String orderLine = runMenu();
+            try {
+                Files.write(orderPath, String.format(orderLine).getBytes(), APPEND);
+            } catch (IOException e) {
+                System.out.println("Ooops une erreur est survenue. Merci de réessayer plus tard");
+                return;
+            }
+
         }
         System.out.println("");
         System.out.println(String.format(orderSummary));
@@ -220,12 +255,17 @@ public class Order {
             System.out.println(i + " - " + responses[i - 1]);
         System.out.println("Que souhaitez-vous comme " + category + "?");
 
-        int nbResponse;
+        int nbResponse = 0;
         boolean responseIsGood;
 
         do {
-            nbResponse = sc.nextInt();
-            responseIsGood = (nbResponse >= 1 && nbResponse <= responses.length);
+            try {
+                nbResponse = sc.nextInt();
+                responseIsGood = (nbResponse >= 1 && nbResponse <= responses.length);
+            } catch (InputMismatchException e) {
+                sc.next();
+                responseIsGood = false;
+            }
 
             if (responseIsGood) {
                 String choice = "Vous avez choisi comme " + category + " : " + responses[nbResponse - 1];
@@ -261,24 +301,28 @@ public class Order {
         return nbMenu;
     }
 
-    public void askSide(boolean allSidesEnable) {
+    public int askSide(boolean allSidesEnable) {
 
         if (allSidesEnable) {
             String[] responsesAllSide = {"légumes frais", "frites", "riz"};
-            askSomething("accompagnement", responsesAllSide);
+            return askSomething("accompagnement", responsesAllSide);
         } else {
             String[] responsesOnlyRice = {"riz", "pas de riz"};
-            askSomething("accompagnement", responsesOnlyRice);
+            return askSomething("accompagnement", responsesOnlyRice);
         }
     }
 
-    public void askDrink() {
+    /**
+     * Display a question about drink in the standard input, get response and display it
+     * @return chosen value
+     */
+
+    public int askDrink() {
 
         String[] responsesDrink = {"eau plate", "eau gazeuse", "soda"};
-        askSomething("boisson", responsesDrink);
+        return askSomething("boisson", responsesDrink);
 
     }
-
 
 }
 
